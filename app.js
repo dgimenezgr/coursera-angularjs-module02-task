@@ -25,7 +25,7 @@ function AlreadyBoughtController(ShoppingListCheckOffService) {
 
   alreadyBoughtList.items = ShoppingListCheckOffService.getAlreadyBoughtItems();
 
-  showList.uncheckItem = function (itemIndex) {
+  alreadyBoughtList.uncheckItem = function (itemIndex) {
     ShoppingListCheckOffService.uncheckItem(itemIndex);
   };
 }
@@ -45,30 +45,43 @@ function ShoppingListCheckOffService() {
       "number": 5
     },
     {
+      "name": "burger buns",
+      "number": "1 pack"
+    },
+    {
       "name": "meaty burgers",
       "number": 15
+    },
+    {
+      "name": "cheddar cheese",
+      "number": "a lot of"
+    },
+    {
+      "name": "bacon",
+      "number": "3 kg"
+    },
+    {
+      "name": "pickles",
+      "number": "1 jar"
     }
   ];
 
   // List of to buy items
-  var alreadyBoughtItems = [
-    {
-      "name": "kale",
-      "number": 1
-    }
-  ];
+  var alreadyBoughtItems = [];
 
   service.checkItem = function (itemIndex) {
-    toBuyItems.splice(itemIndex);
-    alreadyBoughtItems.push(itemIndex)
+    var boughtItem = toBuyItems[itemIndex];    
+    toBuyItems.splice(itemIndex, 1);
+    alreadyBoughtItems.push(boughtItem)
   };
 
   service.uncheckItem = function (itemIndex) {
-    items.splice(itemIndex, 1);
+    var toBuyItem = alreadyBoughtItems[itemIndex];    
+    alreadyBoughtItems.splice(itemIndex, 1);
+    toBuyItems.push(toBuyItem)
   };
 
   service.getToBuyItems = function () {
-    var toBuyItems = toBuyItems;
     return toBuyItems;
   };
 

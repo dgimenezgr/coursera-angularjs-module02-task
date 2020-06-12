@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app='ShoppingListApp'>
   <head>
     <title>Shopping List Check Off</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +10,11 @@
       .emptyMessage {
         font-weight: bold;
         color: red;
+        font-size: 1.2em;
+      }
+      .successMessage {
+        font-weight: bold;
+        color: green;
         font-size: 1.2em;
       }
       li {
@@ -33,22 +38,19 @@
     <!-- To Buy List -->
     <div class="col-md-6" ng-controller="ToBuyController as toBuyList">
      <h2>To Buy:</h2>
-     {{ toBuyList }}
      <ul>
-       <li ng-repeat="toBuyItem in toBuyList.items">Buy {{ toBuyItem.number }} {{ toBuyItem.name }}  <button class="btn btn-default" ng-click="toBuyList.checkItem($index);"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
-       <li>Buy 10 cookies <button class="btn btn-default" ng-click="toBuyList.checkItem($index);"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
-       <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
+       <li ng-repeat="toBuyItem in toBuyList.items track by $index">Buy {{ toBuyItem.number }} {{ toBuyItem.name }}  <button class="btn btn-default" ng-click="toBuyList.checkItem($index);"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
      </ul>
-     <div class="emptyMessage">Everything is bought!</div>
+     <div class="successMessage" ng-if="toBuyList.items.length == 0">Everything is bought!</div>
     </div>
 
     <!-- Already Bought List -->
     <div class="col-md-6" ng-controller="AlreadyBoughtController as alreadyBoughtList">
      <h2>Already Bought:</h2>
      <ul>
-       <li>Bought 10 cookies <button class="btn btn-default" ng-click="alreadyBoughtList.checkItem($index);"><span class="glyphicon glyphicon-remove"></span> Not bought!</button></li>
+        <li ng-repeat="alreadyBoughtItem in alreadyBoughtList.items track by $index">Bought {{ alreadyBoughtItem.number }} {{ alreadyBoughtItem.name }}  <button class="btn btn-default" ng-click="alreadyBoughtList.uncheckItem($index);"><span class="glyphicon glyphicon-remove red"></span> Not bought!</button></li>
      </ul>
-     <div class="emptyMessage">Nothing bought yet.</div>
+     <div class="emptyMessage" ng-if="alreadyBoughtList.items.length == 0">Nothing bought yet.</div>
     </div>
   </div>
 </div>
